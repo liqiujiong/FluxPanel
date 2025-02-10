@@ -1,3 +1,4 @@
+from datetime import datetime
 import io
 import json
 import zipfile
@@ -167,6 +168,8 @@ class GenTableService:
                     db_table_column.query_type = prev_column.query_type
                 db_table_column.is_required = prev_column.is_required
                 db_table_column.html_type = prev_column.html_type
+                db_table_column.create_time = datetime.now()
+                db_table_column.update_time = datetime.now()
                 await GenTableColumnDao.edit_gen_table_column(query_db, db_table_column, auto_commit=False)
             else:
                 await GenTableColumnDao.add_gen_table_column(query_db, db_table_column)
