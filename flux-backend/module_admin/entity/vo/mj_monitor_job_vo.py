@@ -29,7 +29,7 @@ class MjMonitorJobModel(BaseModel):
     job_id: Optional[str] =  Field(default=None, description='job_id')
     job_type: Optional[str] =  Field(default=None, description='job类型')
     liked_by_user: Optional[int] =  Field(default=None, description='是否喜欢')
-    liked_by_user_in_room: Optional[dict] =  Field(default=None, description='喜欢状态')
+    # liked_by_user_in_room: Optional[dict] =  Field(default=None, description='喜欢状态')
     mj_id: Optional[int] =  Field(default=None, description='mj_id')
     parent_grid: Optional[int] =  Field(default=None, description='相关的父网格')
     parent_id: Optional[str] =  Field(default=None, description='父事件job_id')

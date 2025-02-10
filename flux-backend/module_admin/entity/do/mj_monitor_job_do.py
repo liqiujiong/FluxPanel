@@ -29,7 +29,7 @@ class MjMonitorJob(Base, BaseMixin):
 
     liked_by_user = Column(SmallInteger, comment='是否喜欢')
 
-    liked_by_user_in_room = Column(JSON, comment='喜欢状态')
+    # liked_by_user_in_room = Column(JSON, comment='喜欢状态')
 
     mj_id = Column(Integer, comment='mj_id')
 

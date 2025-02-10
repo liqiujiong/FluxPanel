@@ -14,6 +14,7 @@ from module_admin.controller.menu_controller import menuController
 from module_admin.controller.notice_controller import noticeController
 from module_admin.controller.online_controller import onlineController
 from module_admin.controller.partner_info_controller import partnerInfoController
+from module_admin.controller.mj_monitor_job_controller import mjMonitorJobController
 from module_admin.controller.post_controler import postController
 from module_admin.controller.role_controller import roleController
 from module_admin.controller.server_controller import serverController
@@ -42,8 +43,9 @@ admin_controllers = [
     {'router': commonController, 'tags': ['通用模块']},
     {'router': gen1Controller, 'tags': ['系统工具-代码生成']},
     {'router': homeRouter, 'tags': ['产品官网']},
+    {'router': mjMonitorJobController, 'tags': ['MJ']},
     {'router': carInfoController, 'tags': ['测试代码生成']},
-    {'router': partnerInfoController, 'tags': ['测试代码生成']}
+    {'router': partnerInfoController, 'tags': ['测试代码生成']},
 ]
 
 app_controllers = [

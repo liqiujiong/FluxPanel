@@ -19,7 +19,6 @@ from module_admin.service.mj_monitor_job_service import MjMonitorJobService
 
 mjMonitorJobController = APIRouter(prefix='/mj/monitor', dependencies=[Depends(LoginService.get_current_user)])
 
-
 @mjMonitorJobController.get('/list', dependencies=[Depends(CheckUserInterfaceAuth('mj:monitor:list'))])
 async def get_mj_monitor_job_list(
         request: Request,
