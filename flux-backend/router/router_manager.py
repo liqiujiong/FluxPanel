@@ -22,6 +22,7 @@ from module_app.controller.app_login_controller import appLoginController
 from module_gen.controller.gen_controller import gen1Controller
 from module_website.controller.home_controller import homeRouter
 
+
 admin_controllers = [
     {'router': loginController, 'tags': ['登录模块']},
     {'router': captchaController, 'tags': ['验证码模块']},
@@ -42,7 +43,7 @@ admin_controllers = [
     {'router': gen1Controller, 'tags': ['系统工具-代码生成']},
     {'router': homeRouter, 'tags': ['产品官网']},
     {'router': carInfoController, 'tags': ['测试代码生成']},
-    {'router': partnerInfoController, 'tags': ['测试代码生成']},
+    {'router': partnerInfoController, 'tags': ['测试代码生成']}
 ]
 
 app_controllers = [
