@@ -1,0 +1,43 @@
+[tool.poetry]
+name = "flux-backend"
+version = "0.1.0"
+description = ""
+authors = ["liqiujiong <qiujiongli@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+apscheduler = "3.10.4"
+asyncmy = "0.2.9"
+datetime = "5.5"
+fastapi = {version = "0.115.0", extras = ["all"]}
+loguru = "0.7.2"
+openpyxl = "3.1.5"
+pandas = "2.2.2"
+bcrypt = "4.0.1"
+passlib = {version = "1.7.4", extras = ["bcrypt"]}
+pillow = "10.4.0"
+psutil = "6.0.0"
+pydantic-validation-decorator = "0.1.4"
+pyjwt = {version = "2.8.0", extras = ["crypto"]}
+pymysql = "1.1.1"
+redis = "5.0.7"
+requests = "2.32.3"
+sqlalchemy = {version = "2.0.31", extras = ["asyncio"]}
+user-agents = "2.2.0"
+starlette = ">=0.38.6,<0.39.0"
+pydantic = ">=2.9.2,<2.10.0"
+uvicorn = ">=0.32.0,<0.33.0"
+python-dotenv = ">=1.0.1,<1.1.0"
+pydantic-settings = ">=2.6.1,<2.7.0"
+jinja2 = ">=3.1.4,<3.2.0"
+openai = "1.55.2"
+markdown = "3.7"
+oss2 = "2.18.4"
+tinify = "1.6.0"
+beautifulsoup4 = "4.12.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
