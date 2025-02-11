@@ -32,6 +32,9 @@ CREATE TABLE `mj_monitor_job` (
 
 CREATE TABLE `mj_account` (
   `mj_id` int NOT NULL COMMENT '对应账号的 mj_id',
+
+  `user_id` char(36) DEFAULT NULL COMMENT '用户唯一标识符',
+
   `email` varchar(200) DEFAULT NULL COMMENT '邮箱',
   `token` varchar(255) DEFAULT NULL COMMENT 'Token',
   `cookie` varchar(6000) DEFAULT NULL COMMENT 'Cookie',

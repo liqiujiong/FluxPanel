@@ -36,6 +36,8 @@ markdown = "3.7"
 oss2 = "2.18.4"
 tinify = "1.6.0"
 beautifulsoup4 = "4.12.3"
+curl-cffi = "^0.7.4"
+pytest = "^8.3.4"
 
 
 [build-system]
