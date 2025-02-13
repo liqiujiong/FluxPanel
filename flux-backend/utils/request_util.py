@@ -2,7 +2,7 @@ import asyncio
 import functools
 
 
-def retry_on_async_failure(retries: int = 300, interval: int = 2):
+def retry_on_async_failure(retries: int = 5, interval: int = 2):
     """
     装饰器: 当 API 接口抛出报错时重试。
 

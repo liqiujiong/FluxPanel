@@ -1,3 +1,5 @@
+# -*- coding:utf-8 -*-
+
 from typing import Optional, Union
 from curl_cffi import requests
 from utils.request_util import retry_on_async_failure 
@@ -47,11 +49,7 @@ class MjSiteAPI:
                 return response.json()
             return response.content
 
-        except requests.HTTPError as http_exc:
-            print(f"HTTPError: {http_exc}")  # 记录日志或打印错误信息
-            raise
-
-        except requests.RequestException as req_exc:
+        except requests.RequestsError as req_exc:
             print(f"RequestError: {req_exc}")  # 记录日志或打印错误信息
             raise
 
@@ -85,4 +83,10 @@ class MjSiteAPI:
         data = {"job_id": job_id}
         path = f'api/app/jobs/cancel'
         data = await self._request('POST', path, data)
+        return data
+
+    @retry_on_async_failure()
+    async def get_users_account(self):
+        path = f'api/app/users/account'
+        data = await self._request('GET', path)
         return data

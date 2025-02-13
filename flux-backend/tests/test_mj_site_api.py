@@ -1,6 +1,8 @@
+import datetime
+import json
 import pytest
-import config
-from api.mj_site_api import MjSiteAPI
+from module_admin.entity.do.mj_account_do import MjAccount
+from utils.mj_site_api import MjSiteAPI
 
 pytest_plugins = ('pytest_asyncio', )
 
@@ -16,7 +18,7 @@ class TestMjSiteAPI:
 
     async def test_get_discord_url_from_job(self):
         data = await mj_site_api.get_discord_url_from_job('efc57380-2daf-4cf8-87e9-7f798e30e24e')
-        print(data)
+        print(data) 
     
     async def test_cancel_job(self):
         data = await mj_site_api.cancel_job('1d1c6e20-7e7c-4ebb-a492-d1e75beb1891')
@@ -25,3 +27,19 @@ class TestMjSiteAPI:
     async def test_get_jobs(self):
         data = await mj_site_api.get_jobs()
         print(data)
+
+    async def test_get_users_account(self):
+        data = await mj_site_api.get_users_account()
+        print(json.dumps(data, indent=4))
+        # user_id = data['user']['mjId']
+        # subscription_type = data['userData']['plan']['type']
+        mj_account = MjAccount()
+        mj_account.mj_id = data['user']['mjId']
+        mj_account.plan = data['userData']['plan']['type']
+        mj_account.status = data['userData']['status']
+        mj_account.expire_time = datetime.datetime.strptime(data['userData']['billing_period']['end'], '%Y-%m-%d')
+        mj_account.subscribe_time = data['userData']['billing_period']['start']
+        mj_account.total_jobs = data['user']['abilities']['total_jobs']
+        mj_account.user_id = data['user']['mjId']
+        mj_account.last_monitor_time = datetime.now()
+        print(mj_account)

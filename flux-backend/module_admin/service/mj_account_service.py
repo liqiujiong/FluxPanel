@@ -66,3 +66,25 @@ class MjAccountService:
         ]
         binary_data = export_list2excel(new_data)
         return binary_data
+    
+class MjAccountInstance:
+    """
+    账号实例
+    """
+    def __init__(self, mj_account: MjAccountModel):
+        self.mj_account = mj_account
+        self.mj_site_api = MjSiteApi(
+            mj_user_id=mj_account.user_id,
+            mj_site_cookie=mj_account.cookie
+        )
+
+    async def update_mj_account_baseinfo(self):
+        # 通过mj_site_api获取账号信息进行更新
+        if not self.mj_site_api.mj_user_id:
+            await self.mj_site_api.get_users_queue()
+        pass
+
+    async def fetch_mj_account_baseinfo(self):
+        if not self.mj_site_api.mj_user_id:
+            await self.mj_site_api.get_users_queue()
+        pass

@@ -1,0 +1,16 @@
+{
+    "python.testing.pytestArgs": [
+        "flux-backend"
+    ],
+    "python.pythonPath": "C:\\Users\\lqj\\AppData\\Local\\pypoetry\\Cache\\virtualenvs\\flux-backend-f02timBE-py3.13\\Scripts\\python.exe",
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "terminal.integrated.env.windows": {
+        "PYTHONPATH": "${workspaceFolder}/flux-backend"
+    },
+    "python.defaultInterpreterPath": "C:\\Users\\lqj\\AppData\\Local\\pypoetry\\Cache\\virtualenvs\\flux-backend-f02timBE-py3.13\\Scripts\\python.exe",
+    "python.envFile": "${workspaceFolder}/flux-backend/.env.dev",
+    "python.testing.cwd": "flux-backend"
+
+
+}
