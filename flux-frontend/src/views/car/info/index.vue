@@ -2,7 +2,7 @@
     <div class="app-container">
         <el-form
             :model="queryParams"
-            ref="queryRef"
+            ref="multipleForm"
             :inline="true"
             v-show="showSearch"
             label-width="68px"
@@ -68,123 +68,94 @@
             </el-form-item>
         </el-form>
 
-        <el-row :gutter="10" class="mb8">
-            <el-col :span="1.5">
-                <el-button
-                    type="primary"
-                    plain
-                    icon="Plus"
-                    @click="handleAdd"
-                    v-hasPermi="['car:info:add']"
-                    >新增</el-button
-                >
-            </el-col>
-            <el-col :span="1.5">
-                <el-button
-                    type="success"
-                    plain
-                    icon="Edit"
-                    :disabled="single"
-                    @click="handleUpdate"
-                    v-hasPermi="['car:info:edit']"
-                    >修改</el-button
-                >
-            </el-col>
-            <el-col :span="1.5">
-                <el-button
-                    type="danger"
-                    plain
-                    icon="Delete"
-                    :disabled="multiple"
-                    @click="handleDelete"
-                    v-hasPermi="['car:info:remove']"
-                    >删除</el-button
-                >
-            </el-col>
-            <el-col :span="1.5">
-                <el-button
-                    type="warning"
-                    plain
-                    icon="Download"
-                    @click="handleExport"
-                    v-hasPermi="['car:info:export']"
-                    >导出</el-button
-                >
-            </el-col>
-            <right-toolbar
-                v-model:showSearch="showSearch"
-                @queryTable="getList"
-            ></right-toolbar>
-        </el-row>
-
-        <el-table
-            v-loading="loading"
-            :data="infoList"
-            @selection-change="handleSelectionChange"
-        >
-            <el-table-column type="selection" width="55" align="center" />
-
-            <el-table-column label="小车名称" align="center" prop="carName" />
-
-            <el-table-column label="车辆类型" align="center" prop="carType">
-                <template #default="scope">
-                    <dict-tag :options="car_type" :value="scope.row.carType" />
-                </template>
-            </el-table-column>
-
-            <el-table-column
-                label="创建时间"
-                align="center"
-                prop="createTime"
-            />
-
-            <el-table-column label="id" align="center" prop="id" />
-
-            <el-table-column label="图片" align="center" prop="image" />
-
-            <el-table-column label="纬度" align="center" prop="lat" />
-
-            <el-table-column label="经度" align="center" prop="lng" />
-
-            <el-table-column label="所在位置" align="center" prop="location" />
-
-            <el-table-column label="管理员ID" align="center" prop="manager" />
-
-            <el-table-column label="价格" align="center" prop="price" />
-
-            <el-table-column
-                label="操作"
-                align="center"
-                class-name="small-padding fixed-width"
+        <el-card class="base-table" ref="fullTable">
+            <TableSetup
+                ref="tSetup"
+                @onStripe="onStripe"
+                @onRefresh="onRefresh"
+                @onChange="onChange"
+                @onfullTable="onfullTable"
+                @onSearchChange="onSearchChange"
+                :columns="columns"
+                :isTable="isTable"
             >
-                <template #default="scope">
+                <template v-slot:operate>
+                    <el-button
+                        type="primary"
+                        plain
+                        icon="Plus"
+                        @click="handleAdd"
+                        v-hasPermi="['car:info:add']"
+                        >新增</el-button
+                    >
+                    <el-button
+                        type="success"
+                        plain
+                        icon="Edit"
+                        :disabled="single"
+                        @click="handleUpdate"
+                        v-hasPermi="['car:info:edit']"
+                        >修改</el-button
+                    >
+                    <el-button
+                        type="danger"
+                        plain
+                        icon="Delete"
+                        :disabled="multiple"
+                        @click="handleDelete"
+                        v-hasPermi="['car:info:remove']"
+                        >删除</el-button
+                    >
+                    <el-button
+                        type="warning"
+                        plain
+                        icon="Download"
+                        @click="handleExport"
+                        v-hasPermi="['car:info:export']"
+                        >导出</el-button
+                    >
+                </template>
+            </TableSetup>
+            <auto-table
+                ref="multipleTable"
+                class="mytable"
+                :tableData="infoList"
+                :columns="columns"
+                :loading="loading"
+                :stripe="stripe"
+                :tableHeight="tableHeight"
+                @onColumnWidthChange="onColumnWidthChange"
+                @onSelectionChange="handleSelectionChange"
+            >
+                <template #operate="{ row }">
                     <el-button
                         link
                         type="primary"
                         icon="Edit"
-                        @click="handleUpdate(scope.row)"
-                        v-hasPermi="['car:info:edit']"
+                        @click="handleUpdate(row)"
+                        v-hasPermi="['partner:info:edit']"
                         >修改</el-button
                     >
                     <el-button
                         link
                         type="primary"
                         icon="Delete"
-                        @click="handleDelete(scope.row)"
-                        v-hasPermi="['car:info:remove']"
+                        @click="handleDelete(row)"
+                        v-hasPermi="['partner:info:remove']"
                         >删除</el-button
                     >
                 </template>
-            </el-table-column>
-        </el-table>
-
-        <pagination
-            v-show="total > 0"
-            :total="total"
-            v-model:page="queryParams.pageNum"
-            v-model:limit="queryParams.pageSize"
-            @pagination="getList"
-        />
+            </auto-table>
+            <div class="table-pagination">
+                <pagination
+                    v-show="total > 0"
+                    :total="total"
+                    v-model:page="queryParams.pageNum"
+                    v-model:limit="queryParams.pageSize"
+                    @pagination="getList"
+                />
+            </div>
+        </el-card>
 
         <!-- 添加或修改小车信息对话框 -->
         <el-dialog :title="title" v-model="open" width="800px" append-to-body>
@@ -259,7 +230,10 @@
 
 <script setup name="Info">
 import { listInfo, getInfo, delInfo, addInfo, updateInfo } from '@/api/car/info'
-
+import { listAllTable } from '@/api/system/table'
+import TableSetup from '@/components/TableSetup'
+import AutoTable from '@/components/AutoTable'
+import { onMounted } from 'vue'
 const { proxy } = getCurrentInstance()
 const { car_type } = proxy.useDict('car_type')
 
@@ -273,6 +247,11 @@ const multiple = ref(true)
 const total = ref(0)
 const title = ref('')
 const daterangeCreateTime = ref([])
+
+const columns = ref([])
+const stripe = ref(true)
+const isTable = ref(true)
+const tableHeight = ref(500)
 
 const data = reactive({
     form: {},
@@ -316,6 +295,16 @@ function getList() {
     })
 }
 
+function getColumns() {
+    listAllTable({ tableName: 'car_info' })
+        .then((response) => {
+            columns.value = response.data
+        })
+        .then(() => {
+            getList()
+        })
+}
+
 // 取消按钮
 function cancel() {
     open.value = false
@@ -350,7 +339,7 @@ function handleQuery() {
 /** 重置按钮操作 */
 function resetQuery() {
     daterangeCreateTime.value = []
-    proxy.resetForm('queryRef')
+    proxy.resetForm('multipleForm')
     handleQuery()
 }
 
@@ -426,5 +415,31 @@ function handleExport() {
     )
 }
 
-getList()
+//表格全屏
+function onfullTable() {
+    proxy.$refs.tSetup.onFull(proxy.$refs.fullTable.$el)
+}
+//表格刷新
+function onRefresh() {
+    getList()
+}
+//搜索框显示隐藏
+function onSearchChange() {
+    showSearch.value = !showSearch.value
+}
+
+function onStripe(val) {
+    stripe.value = val
+}
+//改变表头数据
+function onChange(val) {
+    columns.value = val
+}
+
+//改变表格宽度
+function onColumnWidthChange(column) {
+    proxy.$refs.tSetup.tableWidth(column)
+}
+
+getColumns()
 </script>

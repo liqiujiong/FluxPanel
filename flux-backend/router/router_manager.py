@@ -2,6 +2,7 @@ from fastapi import APIRouter
 
 from module_admin.controller.cache_controller import cacheController
 from module_admin.controller.captcha_controller import captchaController
+from module_admin.controller.car_driver_controller import carDriverController
 from module_admin.controller.car_info_controller import carInfoController
 from module_admin.controller.common_controller import commonController
 from module_admin.controller.config_controller import configController
@@ -19,6 +20,7 @@ from module_admin.controller.mj_account_controller import mjAccountController
 from module_admin.controller.post_controler import postController
 from module_admin.controller.role_controller import roleController
 from module_admin.controller.server_controller import serverController
+from module_admin.controller.sys_table_controller import sysTableController
 from module_admin.controller.user_controller import userController
 from module_app.controller.app_login_controller import appLoginController
 from module_gen.controller.gen_controller import gen1Controller
@@ -31,6 +33,7 @@ admin_controllers = [
     {'router': userController, 'tags': ['系统管理-用户管理']},
     {'router': roleController, 'tags': ['系统管理-角色管理']},
     {'router': menuController, 'tags': ['系统管理-菜单管理']},
+    {'router': sysTableController, 'tags': ['系统管理-表格管理']},
     {'router': deptController, 'tags': ['系统管理-部门管理']},
     {'router': postController, 'tags': ['系统管理-岗位管理']},
     {'router': dictController, 'tags': ['系统管理-字典管理']},
@@ -48,6 +51,7 @@ admin_controllers = [
     {'router': mjMonitorJobController, 'tags': ['MJ']},
     {'router': carInfoController, 'tags': ['测试代码生成']},
     {'router': partnerInfoController, 'tags': ['测试代码生成']},
+    {'router': carDriverController, 'tags': ['测试代码生成']},
 ]
 
 app_controllers = [
